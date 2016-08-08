@@ -1,0 +1,80 @@
+// injector
+// endinjector
+
+$FC_GREY_BLUE: #312135;
+$FC_GREEN: #5da24a;
+$FC_ORANGE: #d7773b;
+$FC_YELLOW: #dea43e;
+
+// Seccondary pallete
+$FC_DARK_BLUE: #1b2b57;
+$FC_BLUE: #2b65b0;
+$FC_LIGHT_BLUE: #348bc9;
+$FC_GREY: #dfdfde;
+$FC_LIGHT_GREY: #f7f8f8;
+$FC_ACCENT: #d43e38;
+$main-bg-color: $FC_LIGHT_GREY;
+
+button, select, html, textarea, input {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.default-section-view-content {
+  height: 100%;
+}
+
+
+.fc-filter-container {
+	height: 100%;
+}
+
+.fc-filter-resume {
+    padding: 18px 24px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 14px;
+    span {
+      color: #222222;
+    }
+    label {
+      &:first-child {
+        color: #222222;
+      }
+    }
+}
+
+.autocomplete-custom-default {
+  &.md-autocomplete-suggestions li {
+    height: auto;
+    line-height: 38px;
+  }
+  .autocomplete-primary {
+    display: inline;
+    padding: 10px;
+    line-height: 16px;
+    font-size: 14px;
+  }
+  .autocomplete-secondary {
+    display: block;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    line-height: 12px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.md-autocomplete-suggestions-container .autocomplete-custom-default li .highlight {
+  color: $FC_LIGHT_BLUE;
+}
+
+.default-value {
+  .md-text,
+  > label:not(.md-no-float):not(.md-container-ignore),
+  > md-input-container .md-placeholder {
+    color: rgba(0,0,0,0.26);
+  } 
+}

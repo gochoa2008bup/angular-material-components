@@ -1,0 +1,69 @@
+<md-content
+  layout-fill
+  layout="column"
+  layout-align="center center"
+  class="fdp__login">
+  <div class="fdp__login__background-dot"></div>
+  <md-card class="fdp__login__form-card">
+    <md-card-header class="fdp__login__header">
+      <md-card-avatar>
+        <img class="fdp__login__logo" ng-src="{{ 'assets/images/logo.png' | staticUrl }}" />
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-title">Flights Data Provider</span>
+        <span class="md-subhead">Dashboard</span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content class="fdp__login__auth-error" ng-if="vm.loginForm.non_field_errors.length && vm.showLoginForm()">
+      <p ng-repeat="error in vm.loginForm.non_field_errors">{{ error }}</p>
+    </md-card-content>
+    <md-card-content class="fdp__login__inputs">
+      <md-card-content class="password-reset-msg-done" ng-if="vm.succesPasswordReset">
+        <h4>{{ vm.labels.SUCCES_RESET_TITLE }}</h4>
+        <p>{{ vm.labels.SUCCES_RESET_MESSAGE }}</p>
+      </md-card-content>
+      <md-card-content class="password-reset-msg-done fdp__login__auth-error" ng-if="vm.unsuccesPasswordReset">
+        <h4>{{ vm.labels.UNSUCCES_RESET_TITLE }}</h4>
+        <p>{{ vm.labels.UNSUCCES_RESET_MESSAGE }}</p>
+      </md-card-content>
+      <forms-builder form-data="vm.loginForm" ng-submit="vm.onSubmit()" ng-if="vm.showLoginForm()">
+          <md-button class="md-raised md-primary" type="submit">
+              Login
+          </md-button>
+          <md-button ng-click="vm.openForgotPass()">
+              Forgot password
+          </md-button>
+      </forms-builder>
+      <div ng-if="vm.showResetPasswordEmailForm()">
+        <div class="password-reset-msg">
+          <h4>{{vm.labels.RESET_TITLE}}</h4>
+          <p>{{vm.labels.RESET_EMAIL_INSTRUCT}}</p>
+        </div>
+        <forms-builder form-data="vm.resetPasswordEmailForm" on-submit="vm.onResetPasswordSendEmail()">
+          <md-button class="md-raised md-primary" flex type="submit">
+              Reset my password
+          </md-button>
+          <md-button flex ng-click="vm.backToLogin()">
+              {{vm.labels.BACK_TO_LOGIN}}
+          </md-button>
+        </forms-builder>
+      </div>
+      <div ng-if="vm.resetPasswordEmailSentMessage" class="password-reset-msg">
+        <h4>{{vm.labels.RESET_TITLE}}</h4>
+        <p>{{vm.resetPasswordEmailSentMessage}}</p>
+      </div>
+      <div ng-if="vm.showResetPasswordForm()">
+        <div class="password-reset-msg">
+          <h4>{{vm.labels.RESET_TITLE}}</h4>
+          <p>{{vm.labels.PASSWORD_TWICE}}</p>
+        </div>
+        <forms-builder form-data="vm.resetPasswordForm" on-submit="vm.onResetPassword()">
+          <md-button class="md-raised md-primary" flex type="submit">
+              Reset my password
+          </md-button>
+        </forms-builder>
+      </div>
+    </md-card-content>
+    <fdp-loading-overlay fdp-diameter="100" ng-if="vm.loading"></fdp-loading-overlay>
+  </md-card>
+</md-content>

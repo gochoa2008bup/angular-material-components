@@ -1,0 +1,84 @@
+@mixin cover($fixed: true) {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  @if $fixed {
+    position: fixed;
+  }
+}
+
+.fdp {
+  &__login {
+    background-color: #4e6a7e;
+    &__header {
+      padding-top: 30px;
+    }
+    &__inputs {
+      padding: 10px 25px;
+    }
+    .md-button {
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0;
+    }
+    &__background-dot {
+      @include cover();
+      background-image: url('/assets/images/login-background-dot.png');
+      background-repeat: repeat;
+    }
+    &__form-card {
+      background-color: rgba(255, 255, 255, 0.95);
+      position: relative;
+      width: 350px;
+    }
+    &__logo {
+      width: auto;
+      height: 100%;
+      margin: 0 auto;
+    }
+    &__input {
+      margin: 5px 0px;
+    }
+    &__loading-overlay {
+      background-color: rgba(255, 255, 255, 0.85);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      z-index: 1;
+    }
+
+    &__auth-error {
+      color: #F44336;
+      padding: 5px 25px;
+      font-size: 15px;
+    }
+
+    &__forgot-password {
+      color: #BCBDBD;
+      text-decoration: underline;
+      text-transform: none;
+      text-align: left;
+    }
+  }
+}
+
+.password-reset-email-sent-message {
+  margin-top: 0px;
+}
+
+.password-reset-msg {
+  padding: 0px 0px;
+  h4 {
+    margin: 0px;
+  }
+  p {
+    font-size: 12px;
+  }
+}
+
+.password-reset-msg-done {
+  @extend .password-reset-msg;
+  margin-bottom: 20px;
+}

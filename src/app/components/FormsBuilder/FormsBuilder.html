@@ -1,0 +1,132 @@
+<form layout="column"
+  name="buildForm"
+  method="vm.method"
+  novalidate flex
+  ng-submit="vm.onSubmit()"
+  class="forms-builder">
+  <div class="forms-builder-fields-container" flex>
+  <div ng-repeat="(fieldName, field) in vm.formData.fields track by $index" layout="column" layout-align="start stretch">
+    <md-input-container ng-if="field.widget.input_type == 'text' || field.widget.input_type == 'password' || field.widget.input_type == 'number'"
+      class="md-block" ng-class="{ 'md-icon-float md-icon-right': vm.removeFieldButton }">
+      <label>{{field.label}}</label>
+
+      <!-- TODO: Fix maxlength in $compile or $link to avoid repeated markup -->
+
+      <!-- there is maxlength -->
+      <input ng-if="field.widget.attrs.maxlength"
+        ng-required="field.required"
+        type="{{field.widget.input_type}}"
+        ng-model="vm.formData.data[fieldName]"
+        name="{{fieldName}}"
+        md-maxlength="{{field.widget.attrs.maxlength}}">
+
+      <!-- there is NOT maxlength -->
+      <input ng-if="!field.widget.attrs.maxlength"
+        ng-required="field.required"
+        type="{{field.widget.input_type}}"
+        ng-model="vm.formData.data[fieldName]"
+        name="{{fieldName}}">
+
+      <md-icon style="display:inline-block;" ng-if="vm.removeFieldButton" ng-click="null">close</md-icon>
+      <div ng-messages="vm.getFieldErrors(fieldName, field)" ng-if="vm.showErrors(buildForm, fieldName, field)">
+        <div ng-repeat="(errorName, errorMessage) in vm.getErrorMessages(fieldName)"
+          ng-message="{{ errorName }}">
+          {{ errorMessage }}
+        </div>
+      </div>
+    </md-input-container>
+
+    <md-input-container ng-if="field.widget.input_type == 'select'" class="md-block" ng-class="{ 'md-icon-float md-icon-right': vm.removeFieldButton }">
+      <label>{{field.label}}</label>
+      <md-select ng-model="vm.formData.data[fieldName]" ng-required="field.required" name="{{fieldName}}">
+        <md-option ng-repeat="choice in field.choices track by $index" value="{{choice.value}}">
+          {{choice.display}}
+        </md-option>
+      </md-select>
+      <md-icon style="display:inline-block;" ng-if="vm.removeFieldButton" ng-click="null">close</md-icon>
+      <div class="md-errors-spacer"></div>
+      <div ng-messages="vm.getFieldErrors(fieldName, field)" ng-if="vm.showErrors(buildForm, fieldName, field)">
+        <div ng-repeat="(errorName, errorMessage) in vm.formData.fields[fieldName].error_messages" ng-message="{{ errorName }}">{{ errorMessage }}
+        </div>
+      </div>
+    </md-input-container>
+
+    <md-input-container ng-if="field.widget.input_type == 'checkbox'" class="md-block" ng-class="{ 'md-icon-float md-icon-right': vm.removeFieldButton }">
+      <md-checkbox ng-model="vm.formData.data[fieldName]" name="{{fieldName}}" aria-label="{{field.label}}">
+        {{field.label}}
+      </md-checkbox>
+      <md-icon style="display:inline-block;" ng-if="vm.removeFieldButton" ng-click="null">close</md-icon>
+      <div class="md-errors-spacer"></div>
+    </md-input-container>
+
+    <md-input-container ng-if="field.widget.input_type == 'date'" ng-class="{ 'md-icon-float md-icon-right': vm.removeFieldButton }">
+      <label>{{field.label}}</label>
+      <input ng-model="vm.formData.data[fieldName]" name="{{fieldName}}" jqdatepicker timepicker="false" format="Y-m-d" scroll="false" ng-required="field.required">
+      <md-icon style="display:inline-block;" ng-if="vm.removeFieldButton" ng-click="null">close</md-icon>
+      <div class="md-errors-spacer"></div>
+      <div ng-messages="vm.getFieldErrors(fieldName, field)" ng-if="vm.showErrors(buildForm, fieldName, field)">
+        <div ng-repeat="(errorName, errorMessage) in vm.formData.fields[fieldName].error_messages" ng-message="{{ errorName }}">{{ errorMessage }}
+        </div>
+      </div>
+    </md-input-container>
+
+    <md-input-container ng-if="field.widget.input_type == 'tags'" validable-chips ng-class="{ 'md-icon-float md-icon-right': vm.removeFieldButton }" name="{{fieldName}}">
+      <md-chips ng-model="vm.formData.data[fieldName]" delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" placeholder="{{field.label}}" secondary-placeholder="+Tag">
+      </md-chips>
+      <md-icon style="display:inline-block;" ng-if="vm.removeFieldButton" ng-click="null">close</md-icon>
+      <div class="md-errors-spacer"></div>
+      <div ng-messages="vm.getFieldErrors(fieldName, field)" ng-if="vm.showErrors(buildForm, fieldName, field)">
+        <div ng-repeat="(errorName, errorMessage) in vm.formData.fields[fieldName].error_messages" ng-message="{{ errorName }}">{{ errorMessage }}
+        </div>
+      </div>
+    </md-input-container>
+
+    <md-input-container ng-if="field.widget.input_type == 'selectmultiple'" validable-chips ng-class="{ 'md-icon-float md-icon-right': vm.removeFieldButton }">
+      <label>{{field.label}}</label>
+      <md-select ng-model="vm.formData.data[fieldName]" ng-required="field.required" multiple name="{{fieldName}}">
+        <md-optgroup label="meat">
+          <md-option ng-repeat="choice in field.choices track by $index" value="{{choice.value}}">
+            {{choice.display}}
+          </md-option>
+        </md-optgroup>
+      </md-select>
+      <md-icon style="display:inline-block;" ng-if="vm.removeFieldButton" ng-click="null">close</md-icon>
+      <div class="md-errors-spacer"></div>
+      <div ng-messages="vm.getFieldErrors(fieldName, field)" ng-if="vm.showErrors(buildForm, fieldName, field)">
+        <div ng-repeat="(errorName, errorMessage) in vm.formData.fields[fieldName].error_messages" ng-message="{{ errorName }}">{{ errorMessage }}
+        </div>
+      </div>
+    </md-input-container>
+
+   <md-autocomplete ng-if="field.widget.input_type == 'autocomplete'"
+      md-menu-class="autocomplete-custom-default"
+      md-floating-label="{{field.label}}"
+      md-input-name="{{fieldName}}"
+      md-selected-item="field.selectedItem"
+      md-selected-item-change="vm.autocompleteSelectedItemChange(field, fieldName)"
+      md-search-text="field.searchText"
+      md-items="item in vm.getAutocompleteItems(field)"
+      md-item-text="item.display"
+      md-min-length="2"
+      md-autoselect="true"
+      md-select-on-match="true"
+      ng-required="field.required"
+      md-placeholder="{{field.label}}"
+      autocomplete-cleaner-blank>
+        <md-item-template>
+          <span class="autocomplete-primary" md-highlight-text="field.searchText" md-highlight-flags="ig">{{item.display}}</span>
+        </md-item-template>
+        <md-not-found>
+          {{vm.labels.NOT_FOUND}}: "{{field.searchText}}"
+        </md-not-found>
+        <div ng-messages="vm.getFieldErrors(fieldName, field)" ng-if="vm.showErrors(buildForm, fieldName, field)">
+            <div ng-repeat="(errorName, errorMessage) in vm.formData.fields[fieldName].error_messages"
+                ng-message="{{ errorName }}">
+                {{ errorMessage }}
+            </div>
+        </div>
+    </md-autocomplete>
+  </div>
+  </div>
+  <div ng-transclude layout="column"></div>
+</form>

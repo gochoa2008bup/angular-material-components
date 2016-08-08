@@ -1,0 +1,34 @@
+<md-content layout="row">
+  <md-card class="md-padding" flex="50" layout="column">
+    <h2 class="md-primary">{{ vm.labels.TITLE }}</h2>
+    <forms-builder
+      flex
+      on-submit="vm.onSubmit($event)"
+      method="PUT"
+      form-data="vm.formData.profileForm"
+      ng-if="vm.formData.profileForm">
+      <div layout="row">
+        <md-button type="submit" class="md-raised md-primary" flex="50" flex-offset="25">
+          {{ vm.labels.UPDATE }}
+        </md-button>
+      </div>
+    </forms-builder>
+    <fdp-loading-overlay ng-if="vm.loading" form-id="vm.formId"></fdp-loading-overlay>
+  </md-card>
+  <md-card class="md-padding" flex="50" layout="column">
+    <h2 class="md-primary">{{ vm.labels.TITLE_PASSWORD }}</h2>
+    <forms-builder
+      method="PUT"
+      form-data="vm.formData.passwordForm"
+      flex
+      ng-if="vm.formData.passwordForm"
+      on-submit="vm.onSubmitChangePassword($event)">
+      <div layout="row">
+        <md-button type="submit" class="md-raised md-primary" flex="50" flex-offset="25">
+          {{ vm.labels.UPDATE_PASSWORD }}
+        </md-button>
+      </div>
+    </forms-builder>
+    <fdp-loading-overlay ng-if="vm.loading" form-id="vm.formId"></fdp-loading-overlay>
+  </md-card>
+</md-content>
